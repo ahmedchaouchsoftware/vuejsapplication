@@ -8,7 +8,13 @@
     </head>
     <div id="app">
         <h2>{{title}}</h2>
-        <input type="text" placeholder="tâche à effectuer" v-model="task"><button v-on:click="addTask">ajouter</button>
+        <form v-on:submit.prevent="addTask()">
+            <input type="text" placeholder="tâche à effectuer" v-model="task">
+            <button type="submit">ajouter</button>
+        </form>
+        <ul>
+            <li v-for="task in tasks">{{task}}</li>
+        </ul>
     </div>
     <body>
         <script>
