@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width-deveice-width">
+        <script src="vue2.6.11.js"></script>
+        <title>Hello Vue.js</title>
+    </head>
+    <div id="app">
+        {{course}} - {{date}}
+        <img v-bind:src="url" />
+        <input type="text" placeholder="votre nom" v-model="name">{{name}}
+    </div>
+    <body>
+        <script>
+            new Vue({
+                el: '#app',
+                data: {
+                    course: 'Vue.js 2',
+                    date: Date.now(),
+                    url: 'https://vuejs.org/images/logo.png',
+                    name: ''
+
+                }
+            })
+        </script>
+    </body>
+</html>
