@@ -10,25 +10,60 @@
         <title>Hello Vue.js</title>
     </head>
     <div id="app">
+        <my-card>
+            <h3 slot="cardheader">Blog JavaScript</h3>
+            <div slot="cardbody">visiter meanjs.fr</div>
+        </my-card>
+        <hr>
         <h2>Utilisateurs</h2>
         <ul>
-            <li v-for="user in users">{{user.username}}</li>
+            <user-list v-bind:data="users" v-bind:users-coming="usersWhoWillCome"></user-list>
         </ul>
+        <div v-for="user in usersWhoWillCome">
+            {{user.id}} - {{user.email}}
+        </div>
     </div>
     <body>
         <script>
+        Vue.component('my-card',{
+            template: '<div><slot name="cardheader">titre par défaut</slot><slot name="cardbody">contenu par défaut</slot></div>',
+            props:['data']
+        });
+
+        Vue.component('user-list',{
+            template: '<div>\
+                <ul><li v-for="user in data"><user-details v-bind:usr="user" v-on:accept="registerUser(user)"></user-details></li></ul>\
+                </div>',
+            props:['data','usersComing'],
+            methods: {
+                registerUser: function(user){
+                    this.usersComing.push(user);
+                }
+            }
+        });
+
+        Vue.component('user-details',{
+            template: '<div>id: {{usr.id}}, ville: {{usr.address.city}}, email: {{usr.email}} <button v-on:click="acceptInvitation">Accept Invitation</button></div>',
+            props: ['usr'],
+            methods: {
+                acceptInvitation: function() {
+                    this.$emit('accept');
+                }
+            }
+        });
+
         var vm = new Vue({
             el: '#app',
             data: {
                 title: 'Lifecycle hooks',
                 usersUrl: 'https://jsonplaceholder.typicode.com/users',
-                users: []
+                users: [],
+                usersWhoWillCome: []
             },
             created: function() {
                 axios.get(this.usersUrl)
                     .then(function(response) {
-                        vm.users = response.data
-                        console.log(vm.users)    
+                        vm.users = response.data  
                     })
             },
             beforeCreate: function() {
