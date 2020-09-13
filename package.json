@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/ahmedchaouchsoftware/vuejsapplication#readme",
   "dependencies": {
+    "axios": "^0.20.0",
     "lite-server": "^2.5.4"
   }
 }

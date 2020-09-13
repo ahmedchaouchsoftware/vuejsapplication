@@ -4,6 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width-deveice-width">
         <script src="vue2.6.11.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js"></script>
         <link rel="stylesheet" href="style.css"></link>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
         <title>Hello Vue.js</title>
@@ -22,6 +24,11 @@
                 <input type="text" placeholder="votre avis" v-model="opinion">
                 {{ opinionResult }}
             </div>
+            <div>
+                <h2>Chercher un Utilisateur GitHub</h2>
+                <input type="text" v-model="gitHubUser">
+                {{gitHubUserResult}}
+            </div>
         </div>
         </div>
         <script>
@@ -32,7 +39,9 @@
                     phone: '0629640261',
                     emailForNewsletter: '',
                     opinion: '',
-                    opinionResult: ''
+                    opinionResult: '',
+                    gitHubUser: '',
+                    gitHubUserResult: ''
                 },
                 filters: {
                     shorten: function(value){
@@ -63,7 +72,16 @@
                         } else {
                             this.opinionResult = '';
                         }
-                    }
+                    },
+                    /*gitHubUser: function(username) {
+                        axios.get("https://api.github.com/users/"+ username)
+                            .then(function(data){
+                                console.log(data);
+                            })
+                    }*/
+                    gitHubUser: _.debounce(function(username) {
+                        axios.get("https://api.github.com/users/"+ username).then(function(data){console.log(data);})
+                    }, 700)
                 }
             })
         </script>
