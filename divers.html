@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width-deveice-width">
+        <script src="vue2.6.11.js"></script>
+        <link rel="stylesheet" href="style.css"></link>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+        <title>Hello Vue.js</title>
+    </head>
+    <body>
+        <div id="app">
+            {{about | shorten}}
+        </div>
+        <script>
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    about: 'Vue (pronounced /vjuː/, like view) is a progressive framework for building user interfaces. Unlike other monolithic frameworks, Vue is designed from the ground up to be incrementally adoptable. The core library is focused on the view layer only, and is easy to pick up and integrate with other libraries or existing projects. On the other hand, Vue is also perfectly capable of powering sophisticated Single-Page Applications when used in combination with modern tooling and supporting libraries.'
+                },
+                filters: {
+                    shorten: function(value){
+                        if(value.length < 30){
+                            return value;
+                        }
+                        return value.slice(0,30) + '...';
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

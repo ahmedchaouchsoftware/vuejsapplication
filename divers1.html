@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width-deveice-width">
+        <script src="vue2.6.11.js"></script>
+        <link rel="stylesheet" href="style.css"></link>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+        <title>Hello Vue.js</title>
+    </head>
+    <body>
+        <div id="app">
+            {{ this.waysToContact }}
+        <hr>
+        <div>
+            S'inscrire un Newsletter : <input type="text" placeholder="Votre Adresse Mail" v-model="emailForNewsletter">
+            <button v-bind:disabled="emailAddressInvalid">Inscription</button>
+        </div>
+        <div>
+            <h2>Votre avis </h2>
+            <div>
+                <input type="text" placeholder="votre avis" v-model="opinion">
+                {{ opinionResult }}
+            </div>
+        </div>
+        </div>
+        <script>
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    email: 'ing.chaouch.ahmed@gmail.com',
+                    phone: '0629640261',
+                    emailForNewsletter: '',
+                    opinion: '',
+                    opinionResult: ''
+                },
+                filters: {
+                    shorten: function(value){
+                        if(value.length < 30){
+                            return value;
+                        }
+                        return value.slice(0,30) + '...';
+                    }
+                },
+                computed: {
+                    waysToContact: function() {
+                        return 'email : ' + this.email + ' tel : '+ this.phone
+                    },
+                    emailAddressInvalid: function() {
+                        /*if(this.emailForNewsletter.length < 2 || this.emailForNewsletter.indexOf('@') === -1 || this.emailForNewsletter.indexOf('.') === -1){
+                            return true;
+                        } else {
+                            return false;
+                        }*/
+                        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                        return !re.test(this.emailForNewsletter);
+                    }
+                },
+                watch: {
+                    opinion: function(newValue) {
+                        if(newValue.indexOf('azerty') !== -1){
+                            this.opinionResult = 'Restez Poli';
+                        } else {
+                            this.opinionResult = '';
+                        }
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
